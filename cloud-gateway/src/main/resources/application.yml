@@ -1,0 +1,49 @@
+server:
+  port: 7072
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          # 是否和服务注册与发现组件结合，设置为 true 后可以直接使用应用名称调用服务
+          enabled: true
+          lower-case-service-id: true
+      # 不配置routes，则默认使用服务名
+      routes:
+        # 路由标识（id：标识，具有唯一性）   转发指定地址并传入参数
+        - id: service1
+          # 目标服务地址（uri：地址，请求转发后的地址）
+          uri: lb://service1
+          # 路由条件（predicates：断言，匹配 HTTP 请求内容）, 将/s1开头的请求转发到/service1
+          predicates:
+            - Path=/s1/**
+          filters:
+            - StripPrefix=1
+        - id: service2
+          uri: lb://service2
+          predicates:
+            - Path=/s2/**
+          filters:
+            - StripPrefix=1
+eureka:
+  client:
+    service-url:
+      # defaultZone: ${registry.url}
+      # 注册中心地址
+      defaultZone: http://localhost:7070/eureka/
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
+    org.springframework.http.server.reactive: debug
+    org.springframework.web.reactive: debug
+    reactor.ipc.netty: debug
+
+#  【注意】TODO 顺带一说：gateway负载均衡。
+#  那么只要 微服务名称 设置成一样就好了。 e.g.
+#
+#spring:
+#  application:
+#    name: service1
