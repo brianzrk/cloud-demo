@@ -31,9 +31,9 @@ spring:
 eureka:
   client:
     service-url:
-      # defaultZone: ${registry.url}
+      defaultZone: ${registry.url}
       # 注册中心地址
-      defaultZone: http://localhost:7070/eureka/
+#      defaultZone: http://localhost:7070/eureka/
 logging:
   level:
     org.springframework.cloud.gateway: trace

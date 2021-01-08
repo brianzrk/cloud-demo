@@ -6,6 +6,6 @@ spring:
       force: true
   cloud:
     config:
-      uri: http://${host:localhost}:9020
+      uri: http://${host:localhost}:7071
       name: config
       profile: ${active:dev}
