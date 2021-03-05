@@ -22,6 +22,7 @@ HELP.md
 *.iml
 *.ipr
 /out/
+**/*.iml
 
 ### NetBeans ###
 /nbproject/private/
